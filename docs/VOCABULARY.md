@@ -2,6 +2,14 @@
 *(see section 4.3 from our paper)* 
 
 ![](img/x-tira-pd.png)
+> **Figure 1**: The overall design of the `Tira` module and vocabulary. A service can
+consume and expose personal data. Each datum is expressed by a
+`Tira::PersonalDatum` instance, each of which may have
+`Tira::TransparencyProperties` attached which each constitute a
+vocabulary element. Any service itself can have
+`Tira::TransparencyProperties` (e.g. the whole service processes data
+for a given purpose) and a `Tira::PersonalDatum` will inherit these
+properties, if processed by that service.
 
 The vocabulary consists of several entities whose logical structure is depicted above.
 If a schema is marked
