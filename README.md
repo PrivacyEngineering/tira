@@ -1,5 +1,8 @@
 # TIRA: An OpenAPI Extension and Toolbox for GDPR Transparency in RESTful Architectures 
 
+## Personal data indicators
+To learn more about where personal data indicators in OpenAPI specifications may reside, see **[here](docs/PD_INDICATORS.md)**.
+
 ## Vocabulary
 To learn more about our vocabulary used for the proposed OpenAPI extension, see **[here](docs/VOCABULARY.md)**.
 
