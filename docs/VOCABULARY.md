@@ -1,4 +1,5 @@
-# Vocabulary
+# Transparency vocabulary items
+*(see section 4.3 from our paper)* 
 
 ![](img/x-tira-pd.png)
 
