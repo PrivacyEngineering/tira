@@ -33,8 +33,7 @@ regards to storage periods.
 
 For now, we took the vocabulary element of `RetentionTime` as an
 extensive example. All other vocabulary elements follow the same general
-approach. We will now – due to space constraints – *briefly* introduce
-the other vocabulary elements and highlight selected details of their
+approach. We will now  highlight selected details of their
 expressiveness (see Req. 1 from our paper).
 
 **Recipients:** As we are considering a REST context, recipients are
