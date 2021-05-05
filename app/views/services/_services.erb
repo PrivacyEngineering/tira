@@ -1,0 +1,53 @@
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Spec Status</th>
+      <th>Service provider</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% services.each do |service| %>
+      <tr 
+        <% if service.ignore %>
+          class="inactive"
+        <% end %>
+      >
+        <td><%= link_to service.name, service_api_specs_path(service) %></td>
+        <td>
+          <% if service.api_specs.count > 0 %>
+            <span class="badge success"> Spec present </span>
+          <% else %>
+            <span class="badge error"> No spec found </span>
+          <% end %>
+        </td>
+        <td><%= service.service_provider_id %></td>
+        <td>
+          <%= link_to edit_service_path(service) do %>
+            <i class="fa fa-pencil-square-o"></i>
+          <% end %>
+          &nbsp;
+          <% if service.git_http_url %>
+            <a href="<%= service.git_http_url %>" target="_blank">
+              <i class="fa fa-external-link"></i>
+            </a>
+          <% end %>
+          &nbsp;
+          <%= link_to service, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                <i style="" class="fa fa-times red-text"></i>
+          <% end %>
+          &nbsp;
+          <% if service.api_specs.last %>
+            <%= link_to 'Show Spec', show_swagger_service_api_spec_path(service, service.api_specs.last) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

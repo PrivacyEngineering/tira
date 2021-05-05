@@ -1,0 +1,319 @@
+<% @personal_data.each do |personal_datum_name, personal_data_of_schema| %>
+<% 
+    pds = []
+    pds += personal_data_of_schema["consumed"] if personal_data_of_schema["consumed"]
+    pds += personal_data_of_schema["exposed"] if personal_data_of_schema["exposed"]
+    pds_consumed = personal_data_of_schema["consumed"] if personal_data_of_schema["consumed"] 
+    pds_exposed = personal_data_of_schema["exposed"] if personal_data_of_schema["exposed"] 
+ %>
+<% services = pds.map{|p| p.values}.flatten.uniq %>
+
+
+    <div class="row personal-data-header">
+        <div class="col-md-8 pd-name">
+            <%= personal_datum_name %>
+        </div>
+        
+        <div class="col-md-4 pd-actions">
+            <%= link_to '<span class="fa fa-external-link"></span> Ref-Link'.html_safe, schema_spec_path(personal_datum_name), html: {target: "_blank"}, class: "btn btn-default" %>
+
+                <!-- <li class="list-group-item"> -->
+                <!-- </li> -->
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- ---------------------------------------------------------------- -->
+        <div class="col-md-4">
+            <%  if personal_data_of_schema["consumed"]&.first&.keys&.first
+                    pd = personal_data_of_schema["consumed"].first.keys.first
+                elsif personal_data_of_schema["exposed"]&.first&.keys&.first
+                    pd = personal_data_of_schema["exposed"].first.keys.first
+                end 
+            %>
+            <div class="card main-card">
+                <div class="card-header">
+                    Properties
+                </div>
+                <!-- <div class="card-body"> -->
+                    <ul class="list-group list-group-flush">
+                        <% pd.properties.map{|p| p.keys.first}.each do |property| %>
+                            <li class="list-group-item"><%= property %></li>
+                        <% end %>
+                    </ul>
+                <!-- </div> -->
+            </div>
+
+            <div class="card main-card">
+                <div class="card-header">
+                    Legal Basis
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><i class="gray-text">TBA</i></li>
+                </ul>
+            </div>
+            <% if pd.special_category? %>
+                <div class="card main-card">
+                    <div class="card-header alert-color">
+                        Special Category
+                    </div>
+                    <!-- <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="alert-color">Yes</i></li>
+                    </ul> -->
+                </div>
+            <% end %>
+            <% if pd.profiling? %>
+                <div class="card main-card">
+                    <div class="card-header alert-color">
+                        Object to Profiling
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i><%= pd.profiling_reason %></i></li>
+                    </ul>
+                </div>
+            <% end %>
+        </div>
+        <!-- ---------------------------------------------------------------- -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Services
+                </div>
+                <div class="card-body property-bodies">
+                    <h6 class="">Consumed By</h6>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <% if consumed = personal_data_of_schema["consumed"] %>
+                        <% consumed.each do |personal_datum| %>
+                            <li class="list-group-item"><%= personal_datum[personal_datum.keys.first].name %></li>
+                        <% end %>
+                    <% end %>
+                </ul>
+                <div class="card-body property-bodies">
+                    <h6 class="">Exposed By</h6>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <% if exposed = personal_data_of_schema["exposed"] %>
+                        <% exposed.each do |personal_datum| %>
+                            <li class="list-group-item"><%= personal_datum[personal_datum.keys.first].name %></li>
+                        <% end %>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+        <!-- ---------------------------------------------------------------- -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Retention Time
+                </div>
+                <% retention_times = [] %>
+                <% if pds_consumed and pds_consumed.size > 0 %>
+                    <div class="card-body property-bodies">
+                        <h6 class="">Consumed</h6>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <% pds_consumed.map do |pd| %>
+                            <% if pd.keys.first.retention_time  %>
+                                <% personal_datum = pd.keys.first %>
+                                <li class="list-group-item">
+                                    <% t = personal_datum.retention_time.retention_timespan %>
+                                    <% if t == -1 %>
+                                        Unlimited
+                                    <% else %>
+                                        <%= t %> days 
+                                    <% end %>
+                                    <span class="gray-text">
+                                        - <%= personal_datum.service.name %>
+                                    </span>
+                                    <% retention_times << personal_datum.retention_time.retention_timespan %>
+                                </li>
+                            <% end %>
+                        <% end %>
+                    </ul>
+                <% end %>
+                <% if pds_exposed and pds_exposed.size > 0 %>
+                        <div class="card-body property-bodies">
+                            <h6 class="">Exposed</h6>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                        <% pds_exposed.map do |pd| %>
+                            <% if pd.keys.first.retention_time  %>
+                                <% personal_datum = pd.keys.first %>
+                                <li class="list-group-item">
+                                    <% t = personal_datum.retention_time.retention_timespan %>
+                                    <% if t == -1 %>
+                                        Unlimited
+                                    <% else %>
+                                        <%= t %> days 
+                                    <% end %>
+                                    <span class="gray-text">
+                                        - <%= personal_datum.service.name %>
+                                    </span>
+                                    <% retention_times << personal_datum.retention_time.retention_timespan %>
+                                </li>
+                            <% end %>
+                        <% end %>
+                        </ul>
+                    <% end %>
+                <div class="card-footer text-center">
+                    <% if retention_times.include? -1 %>
+                        Unlimited <span class="gray-text">(Based on consent)</span>
+                    <% else %>
+                        <%= retention_times.compact.max %> days
+                    <% end %>
+                </div>
+            </div>
+        </div>
+            <!-- ---------------------------------------------------------------- -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Purposes
+                </div>
+
+                    <% purpose_hash = {} %>
+                    <% pds.each do |pd|
+                        personal_datum = pd.keys.first
+                        if purposes = pd.keys.first&.purposes&.get_permitted_purposes %>
+                            <%  purposes.flatten.map{ |purpose| 
+                                    purpose&.name if purpose&.name
+                                }.uniq.each do |purp_name| %>
+                                    <% if purp_name != nil %>
+
+                                        <%  if not purpose_hash[purp_name]
+                                                purpose_hash[purp_name] = []
+                                            end 
+                                            purpose_hash[purp_name] << personal_datum.service
+                                        %>
+                                    <% end %>
+                                <% end %>
+                        <% end %>
+                    <% end %>
+                <ul class="list-group list-group-flush">
+                    <% purpose_hash.each do |purpose_name, services| %>
+                        <li class="list-group-item">
+                            <%= purpose_name %>
+                            <span class="gray-text">
+                                 <%#= personal_datum.service.name %>
+                            </span>
+                            <% services.uniq.each do |service| %>
+                                <footer class="blockquote-footer">
+                                    <%= service.name %>  
+                                </footer>
+                            <% end %>
+                        </li>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- ---------------------------------------------------------------- -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Utilizers / Recipients
+                </div>
+                <% utilizer_incl_categories = [] %>
+                <ul class="list-group list-group-flush">
+                    <% pds.map do |pd| %>
+                        <% personal_datum = pd.keys.first %>
+                        <% if personal_datum %>
+                            <% personal_datum.utilizer(withouth_service: true).each do |utilizer|  %>
+                                <li class="list-group-item">
+                                    <%= utilizer.name %>     
+                                </li>
+                                <% utilizer_incl_categories << utilizer %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                </ul>
+
+                <div class="card-body property-bodies">
+                    <h6 class="">Utilizer Categories</h6>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <% pds.map do |pd| %>
+                        <% personal_datum = pd.keys.first %>
+                        <% if personal_datum %>
+                            <% personal_datum.utilizer_categories.each do |utilizer|  %>
+                                <li class="list-group-item">
+                                    <%= utilizer.name %>     
+                                </li>
+                                <% utilizer_incl_categories << utilizer %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                </ul>
+                <div class="card-body property-bodies">
+                    <h6 class="">Processors of Services</h6>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <% services.map{|s| s.transparency_service.utilizer}.each do |utilizers| %>
+                        <% if utilizer = utilizers.first %>
+                            <li class="list-group-item"><%= utilizer.name %></li>
+                            <% utilizer_incl_categories << utilizer %>
+                        <% end %>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- ---------------------------------------------------------------- -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Third Country Transfer 
+                </div>
+                <ul class="list-group list-group-flush">
+                    <% (utilizer_incl_categories+services.map{|s| s.transparency_service}).each do |u| %>
+                        <% if u.non_eu? %>
+                            <li class="list-group-item"><%= u.name %>
+                                <% if u.class == Tira::Property::UtilizerCategory %>
+                                    (Category)
+
+                                <% elsif u.class == Tira::OpenApiServices::OpenApi3ServiceService %>
+                                    (Service)
+
+                                <% end %>
+                                    <% if country = u.country %>
+                                    <span class="gray-text">
+                                        -&nbsp;<%= country %>
+                                    </span>
+                                <% end %>
+                            </li>
+                        <% end %>
+                    <% end %>
+                </ul>
+                
+                <div class="card-footer text-center">
+                    <% if utilizer_incl_categories.map{|s| s.non_eu?}.include? true %>
+                        <span class="alert-color">Yes</span>
+                    <% else %>
+                        <span class="sucess-color">No</span>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+<% end %>
+
+
+
+<!-- 
+<% @specs.each do |s| %>
+    <% if s %>
+        <h2>spec x</h2>
+        <% s.get_personal_data.each do |personal_datum_name, personal_datum| %>
+            <h5><%= personal_datum_name %></h5>
+        <% end %>
+    <% end %>
+<% end %>
+
+ -->

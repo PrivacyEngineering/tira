@@ -1,0 +1,18 @@
+<%= simple_form_for(@api_spec, url: service_api_specs_path(@service), method: :post, html: { class: 'form-horizontal' }) do |form| %>
+
+
+  <div class="field">
+    <%= form.input :spec, as: :text %>
+  </div>
+  <div class="field">
+    <%= form.input :description %>
+  </div>
+  <div class="field">
+    <%= form.input :commit_message %>
+  </div>
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

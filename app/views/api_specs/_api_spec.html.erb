@@ -1,0 +1,21 @@
+<tr>
+    <td><%= api_spec.description %></td>
+    <td><%= I18n.l api_spec.created_at, :format => :short  %></td>
+    <td>
+        <%= api_spec.commit_message %>
+        <% if api_spec.commit_url %>
+            &nbsp;
+            <a href="<%= api_spec.commit_url %>" target="_blank">
+                <span class="fa fa-external-link"></span>
+            </a>
+        <% end %>
+    </td>
+    <td><%= api_spec.branch %></td>
+    <td><%= api_spec.author %></td>
+    <td>
+        <% if api_spec.open_api_specification.attached?  %>
+            <%= link_to 'View Spec', show_swagger_service_api_spec_path(api_spec.service, api_spec) %>&nbsp;
+            <a href="<%= url_for(api_spec.open_api_specification) %>"><span class="fa fa-download"></span></a>
+        <% end %>
+    </td>
+</tr>

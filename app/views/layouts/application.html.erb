@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for?(:title) ? yield(:title) + " | TransparencyHub" : "TransparencyHub" %></title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="container nav-container">
+      <!-- nav -->
+      <%= render 'layouts/navbar' %>
+    </div>
+
+
+    <%= render 'layouts/flashs' if !flash.empty? %>
+
+
+
+    <div class="container header-container">
+      <!-- header -->
+      <!-- filterin oder sowas -->
+    </div>
+
+    <div class="container content-container">
+      <!-- content -->
+      <div class="row">
+        <div class="col-12">
+          <%= yield %>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

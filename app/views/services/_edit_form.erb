@@ -1,0 +1,69 @@
+<%= simple_form_for(@service, html: { class: 'form-horizontal' }) do |form| %>
+  <% if service.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(service.errors.count, "error") %> prohibited this service from being saved:</h2>
+
+      <ul>
+      <% service.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-4">
+      Service:
+    </div>
+    <div class="col-6">
+       <strong><%= service.name %></strong>
+    </div>  
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      Internal Service
+    </div>
+    <div class="col-6">
+      <%= form.check_box :internal %>
+    </div>  
+  </div>
+  <div class="row">
+    <div class="col-4">
+      Service does not process personal data
+    </div>
+    <div class="col-6">
+      <%= form.check_box :ignore %>
+    </div>  
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <br>
+      <h4>Senders</h4>
+      <%= form.select :sender_ids, Service.all.where(ignore: [nil, false]).where.not(id: service.id).collect {|x| [x.name, x.id]}, {}, :multiple => true, class: 'multipleSelect' %>  
+    </div>
+    <div class="col-6">
+      <br>
+      <h4>Receivers</h4>
+      <%= form.select :receiver_ids, Service.all.where(ignore: [nil, false]).where.not(id: service.id).collect {|x| [x.name, x.id]}, {}, :multiple => true, class: 'multipleSelect' %>  
+    </div>
+  </div>
+
+  
+
+  <div class="field">
+    
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Save Service', :class => 'btn btn-large btn-main' %>
+  </div>
+<% end %>
+
+
+
+<%#= javascript_include_tag "popper" %>
+<%= javascript_include_tag "jquery-multi-select" %>
+<script type="text/javascript">
+  $('.multipleSelect').multiSelect()
+</script>

@@ -1,0 +1,66 @@
+<h1>Utilizers</h1>
+
+<p class="info-cite">
+    <span class="fa fa-info"></span>
+    Utilizers & Utilizer Categories only come from exposed data. Service Processors (like AWS) apply for all data.
+</p>
+
+<table class="table table-striped bigger-table">
+    <thead>
+        <tr>
+            <th style="text-align: center;">Name</th>
+            <th>Type</th>
+            <th>Personal Data</th>
+            <th>Services</th>
+            <th>Third Country</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @utilizers.each do |utilizer, personal_data| %>
+            <tr>
+                <td class="main-td"><%= utilizer.name %></td>
+                <td>
+                    <% if utilizer.class == Tira::Property::UtilizerCategory %>
+                        Utilizer Category
+                    <% else %>
+                        Utilizer
+                        <% if utilizer.service_wide %>
+                            (Service Processor)
+                        <% end %>
+                    <% end %>
+                </td>
+                <td>
+                    <ul>
+                        <% personal_data.each do |pd| %>
+                          <li><%= pd.name %></li>  
+                        <% end %>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <% personal_data.map{|pd| pd.service}.uniq.each do |service| %>
+                            <li><%= service.name %></li>
+                        <% end %>
+                    </ul>
+
+
+                </td>
+                <td>
+                    <% if utilizer.non_eu? %>
+                        <span class="alert-color">Yes</span>
+                        <% if country = utilizer.country %>
+                            <span class="gray-text">
+                                -&nbsp;<%= country %>
+                            </span>
+                        <% end %>
+                    <% else %>
+                        <span class="sucess-color">No</span>
+                    <% end %>   
+                            
+                </td>
+                <td></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+
+ruby '2.5.1'
+
+gem "openapi3_parser"
+gem "ruby-enum"

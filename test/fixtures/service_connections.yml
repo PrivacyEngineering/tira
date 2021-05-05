@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  service_a_id: 1
+  service_b_id: 1
+  direction: 1
+
+two:
+  service_a_id: 1
+  service_b_id: 1
+  direction: 1

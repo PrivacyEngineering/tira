@@ -1,0 +1,75 @@
+<div class="row apispec-info">  
+      <div class="col-12">
+        <div class="card">
+          
+          <h4 class="card-header">TransparencyHub Information</h5>
+          <div class="card-body">
+            <!-- <h4 class="card-title">General Info</h5> -->
+              <% if not @spec_service.valid? %>
+                <h6 class="card-text alert-text">
+                  <span class="fa fa-exclamation-circle"></span> Spec not valid
+                  <ul>
+                    <% @spec_service.errors.each do |error| %>
+                      <li><%= error %></li>
+                    <% end %>
+                  </ul>
+                </h6>
+              <% else %>
+                <h6 class="card-tex success-text">
+                  <span class="fa fa-check-circle"></span> Spec valid
+                </h6>
+                <hr>
+                <h4>Personal Data within this Spec</h4>
+                  
+                <% @personal_data.each do |schema_name, personal_datum| %>
+                  <div class="row">
+                    <div class="col-12">
+
+                      <h5><%= schema_name %></h5>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <h6>Properties</h6>
+                      <ul>
+                        <% personal_datum.property_schemas.each do |property_schema| %>
+                        <!-- property has only one key -->
+                          <li>
+                            <%= property_schema.name %>
+                            <% if property_schema.property_schemas.size > 0 %>
+                              <ul>
+                                <% property_schema.property_schemas.each do |ps| %>
+                                  <li><%= ps.get_name %></li>
+                                <% end %>
+                              </ul>
+                            <% end %>
+                          </li>
+                        <% end %>
+                      </ul>
+                    </div>
+                    <% if personal_datum.retention_time %>
+                      <div class="col-md-3">
+                        <h6>Retention Time</h6>
+                        <p><%= personal_datum.retention_time.retention_timespan %> days</p>
+                      </div>
+                    <% end %>
+                    <% if personal_datum.purposes and personal_datum.purposes.get_permitted_purposes %>
+                      <div class="col-md-3">
+                        <h6>Purposes</h6>
+                        <ul>
+                          <% personal_datum.purposes.get_permitted_purposes.each do |purpose| %>
+                          <li><%= purpose %></li>
+                          <% end %>
+                        </ul>
+                      </div>
+                    <% end %>
+                  </div>
+
+                <% end %>
+
+
+              <% end %>
+          </div>
+        </div>
+      </div> 
+    </div>

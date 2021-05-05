@@ -1,0 +1,41 @@
+<h1>All Purposes</h1>
+
+<table class="table table-striped  bigger-table">
+    <thead>
+        <tr>
+            <th style="text-align: center;">Name</th>
+            <th>Parents</th>
+            <th>Children</th>
+            <th>Services</th>
+            <th>Personal Data</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @purposes.each do |purpose| %>
+        <tr>
+            <td class="main-td"><%= purpose.name %></td>
+            <td></td>
+            <td></td>
+            <td>
+                <ul>
+                    <% purpose.services.each do |service| %>
+                        <li><%= service.name %></li>
+                    <% end %>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <% purpose.personal_data.each do |pd| %>
+                        <li><%= pd.name %></li>
+                    <% end %>
+                </ul>
+            </td>
+            <td>
+                <%= link_to '<span class="fa fa-external-link"></span> Ref-Link'.html_safe, purpose_spec_path(purpose.name), html: {target: "_blank"}, class: "btn btn-default" %>
+            </td>
+        </tr>
+        <% end %>
+
+    </tbody>
+</table>

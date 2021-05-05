@@ -1,0 +1,11 @@
+<%= simple_form_for(@api_spec, url: personal_data_path(@personal_datum), method: :post, html: { class: 'form-horizontal' }) do |form| %>
+
+  <div class="field">
+    <%= form.input :lawful_basis %>
+  </div>
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,120 @@
+<h1>System Overview</h1>
+
+<!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
+<%#= javascript_include_tag "cytoscape/cytoscape" %>
+<%#= javascript_include_tag "cytoscape/cytoscape-popper" %>
+
+
+
+<!-- <script src="cytoscape/cytoscape.js"></script> -->
+
+
+
+<div class="row">
+    <div class="col-12">
+      <div id="my_chart">
+        
+      </div>
+
+    </div>    
+</div>
+
+
+<!-- Edge Type: https://js.cytoscape.org/demos/edge-types/ -->
+<!-- Node Layout: https://js.cytoscape.org/#cy.layout -->
+<script type="text/javascript">
+// let popper = require('cytoscape-popper');
+
+// cytoscape.use( popper ); // register extension
+
+var cy = cytoscape({
+
+  container: document.getElementById('my_chart'), // container to render in
+
+  elements: [ // list of graph elements to start with
+    <% @services.each do |service| %>
+      { // node a
+        group: 'nodes',
+        <% if service.ignore %>
+          classes: ['non_processing'],
+        <% end %>
+        <% if not service.internal %>
+          classes: ['third_party'],
+        <% end %>
+        data: { 
+          id: '<%= service.id %>', 
+          name: "<%= service.name %> <% if service.ignore %>(no Processing)<% end %>",
+          <% if service.internal %>
+            parent: 'conpany_domain' 
+          <% end %>
+        }
+      },
+    <% end %>
+    <% @services.each do |service| %>
+      <% service.receivers.each do |receiver| %>
+        { // edge ab
+          group: 'edges',
+          data: { id: '<%= service.id %><%= receiver.id %>', source: '<%= service.id %>', target: '<%= receiver.id %>' },
+        },
+      <% end %>
+    <% end %>
+    { // node nparent
+        data: { id: 'conpany_domain', name: 'Company Domain' }, 
+        classes: ['parent_node']
+    },
+
+  ],
+
+  style: [ // the stylesheet for the graph
+    {
+      selector: 'node',
+      style: {
+        'background-color': '#666',
+        'label': 'data(name)',
+        'shape': 'round-rectangle',
+        'z-index': 100,
+      }
+    },
+
+    {
+      selector: 'edge',
+      style: {
+        'curve-style': 'unbundled-bezier',
+        'target-arrow-shape': 'triangle'
+      }
+    },
+    {
+      selector: '.parent_node',
+      style: {
+        'background-color': '#ffffff',
+        'border-style': 'dashed',
+        'border-width': '2px',
+        'border-color': '#000000',
+        'z-index': 1,
+      },
+    },
+    {
+      selector: '.third_party',
+      style: {
+        'border-color': '#e0cc00',
+        'border-width': '2px',
+      }
+    },
+    {
+      selector: '.non_processing',
+      style: {
+        'background-color': '#bbbbbb'
+      }
+    }
+  ],
+
+  layout: {
+    name: 'breadthfirst',
+    rows: <%= @services.size/2 %>,
+    fit: true,
+    directed: false,
+    avoidOverlap: true,
+  }
+
+});
+</script>

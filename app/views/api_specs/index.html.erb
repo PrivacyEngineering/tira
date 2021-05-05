@@ -1,0 +1,20 @@
+<h1>API Specs of <i><%= @service.name %></i></h1>
+
+<%= link_to 'New Spec', new_service_api_spec_path(@service), class: 'btn btn-main' %>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Datetime</th>
+            <th>Commit Message</th>
+            <th>Branch</th>
+            <th>Author</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <%= render @api_specs %>
+    </tbody>
+</table>

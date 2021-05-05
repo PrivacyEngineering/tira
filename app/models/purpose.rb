@@ -1,0 +1,2 @@
+class Purpose < ApplicationRecord
+end

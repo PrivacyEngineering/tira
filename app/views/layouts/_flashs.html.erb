@@ -1,0 +1,8 @@
+<%# flash_types: :error, :success, :warning, :info] %>
+
+
+<div class="container flash-container" >
+ <% flash.each do |key, value| %>
+    <%= content_tag(:div, value, :class => "container flash-message #{key}") %>
+  <% end %>
+</div>

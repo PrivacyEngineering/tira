@@ -1,0 +1,20 @@
+<h1>Services</h1>
+
+<% if not request.params[:ignored] %>
+    <h2>Internal</h2>
+    <%= render 'services', services: @internal_services %>
+    <hr>
+    <%= link_to 'New Service', new_service_path, class: 'btn btn-main' %>
+    <%= link_to 'Further Services without Personal Data', services_path(ignored: 'true'), class: 'btn btn-default' %>
+    <hr>
+    <h2>External</h2>
+    <%= render 'services', services: @external_services %>
+<% else %>
+<%= link_to 'All Services', services_path, class: 'btn btn-default' %>
+    <h2>Services that do not process personal data</h2>
+    <p class="subheading">
+        Services, that were registered, as they are versioned using git but that are not involved in the processing of personal data
+    </p>
+    <%= render 'services', services: @services %>
+
+<% end %>
