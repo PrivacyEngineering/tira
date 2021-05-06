@@ -1,10 +1,32 @@
-# TIRA: An OpenAPI Extension and Toolbox for GDPR Transparency in RESTful Architectures 
+# TIRA: An OpenAPI Extension and Toolbox for GDPR Transparency in RESTful Architectures
+
+
+<p float="left" align="center">
+  <img src="/docs/img/application_final.png" width="66%" /> 
+</p>
+
+
+
+```
+@misc{tira2021,
+    title = {TIRA: An OpenAPI Extension and Toolbox for GDPR Transparency in RESTful Architectures},
+    author = {Elias Grünewald and Paul Wille and Frank Pallas and Maria C. Borges and Max-R. Ulbricht},
+    year = {2021},
+}
+```
+
+Please get in touch with us via https://www.ise.tu-berlin.de/. 
 
 ## Personal data indicators
 To learn more about where personal data indicators in OpenAPI specifications may reside, see **[here](docs/PD_INDICATORS.md)**.
 
 ## Vocabulary
 To learn more about our vocabulary used for the proposed OpenAPI extension, see **[here](docs/VOCABULARY.md)**.
+
+<p float="left" align="center">
+  <img src="/docs/img/x-tira-pd.png" width="45%" />
+  <img src="/docs/img/thub_stepcount_schema.png" width="45%" />
+</p>
 
 ## Example of *x-tira* in an OpenAPI document
 We describe a `ToothbrushEvent` that can be shared with other utilizers via the example service from our paper. 
