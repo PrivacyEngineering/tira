@@ -6,14 +6,24 @@
 </p>
 
 
+Transparency – the provision of information about what personal data is collected for which purposes, how long it is stored, or to which parties it is transferred – is one of the core privacy principles underlying regulations such as the GDPR. Technical approaches for implementing transparency in practice are, however, only rarely considered. In this paper, we present a novel approach for doing so in current, RESTful application architectures and in line with prevailing agile and DevOps-driven practices. For this purpose, we introduce 1) a transparency-focused extension of OpenAPI specifications that allows individual service descriptions to be enriched with transparency-related annotations in a bottom-up fashion and 2) a set of higher-order tools for aggregating respective information across multiple, interdependent services and for coherently integrating our approach into automated CI/CD-pipelines. Together, these building blocks pave the way for providing transparency information that is more specific and at the same time better reflects the actual implementation givens within complex service architectures than current, overly broad privacy statements.
+
+
+## 📚 **[Read our paper here.](https://github.com/PrivacyEngineering/tira/raw/main/Transparency_in_RESTful_Architectures_IWPE21_preprint.pdf)**
+
 
 ```
-@misc{tira2021,
-    title = {TIRA: An OpenAPI Extension and Toolbox for GDPR Transparency in RESTful Architectures},
-    author = {Elias Grünewald and Paul Wille and Frank Pallas and Maria C. Borges and Max-R. Ulbricht},
-    year = {2021},
+@incollection{tira2021,
+  title = {TIRA: An OpenAPI Extension and Toolbox for GDPR Transparency in RESTful Architectures},
+  author = {Elias Grünewald and Paul Wille and Frank Pallas and Maria C. Borges and Max-R. Ulbricht},
+  intype = {to appear in},
+  booktitle = {2021 International Workshop on Privacy Engineering (IWPE)},
+  publisher = {IEEE Computer Society},
+  year = {2021}
 }
 ```
+
+
 
 Please get in touch with us via https://www.ise.tu-berlin.de/. 
 
