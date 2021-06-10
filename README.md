@@ -25,7 +25,7 @@ Transparency – the provision of information about what personal data is collec
 
 
 
-Please get in touch with us via https://www.ise.tu-berlin.de/. 
+Please get in touch with us via https://www.ise.tu-berlin.de/eg. 
 
 ## Personal data indicators
 To learn more about where personal data indicators in OpenAPI specifications may reside, see **[here](docs/PD_INDICATORS.md)**.
