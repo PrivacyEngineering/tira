@@ -9,7 +9,7 @@
 Transparency – the provision of information about what personal data is collected for which purposes, how long it is stored, or to which parties it is transferred – is one of the core privacy principles underlying regulations such as the GDPR. Technical approaches for implementing transparency in practice are, however, only rarely considered. In this paper, we present a novel approach for doing so in current, RESTful application architectures and in line with prevailing agile and DevOps-driven practices. For this purpose, we introduce 1) a transparency-focused extension of OpenAPI specifications that allows individual service descriptions to be enriched with transparency-related annotations in a bottom-up fashion and 2) a set of higher-order tools for aggregating respective information across multiple, interdependent services and for coherently integrating our approach into automated CI/CD-pipelines. Together, these building blocks pave the way for providing transparency information that is more specific and at the same time better reflects the actual implementation givens within complex service architectures than current, overly broad privacy statements.
 
 
-## 📚 **[Read our paper here.](https://github.com/PrivacyEngineering/tira/raw/main/Transparency_in_RESTful_Architectures_IWPE21_preprint.pdf)**
+## 📚 Read our paper [here](https://github.com/PrivacyEngineering/tira/raw/main/Transparency_in_RESTful_Architectures_IWPE21_preprint.pdf) or on [arXiv](https://arxiv.org/abs/2106.06001).
 
 
 ```
