@@ -38,6 +38,37 @@ To learn more about our vocabulary used for the proposed OpenAPI extension, see 
   <img src="/docs/img/thub_stepcount_schema.png" width="45%" />
 </p>
 
+
+## Installation
+
+```bash
+# Make sure ruby is installed
+ruby --version
+
+# Clone the repo
+git clone git@github.com:PrivacyEngineering/tira.git
+cd tira/
+
+# Install rails
+sudo gem install rails
+
+# ...and all dependencies (might ask for your password and then takes a while)
+sudo gem install bundler
+bundle install
+
+# Run a postgres database via the offical docker image
+docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+
+# Edit the credentials
+... # TODO
+
+# Start the application
+rails server
+
+open http://localhost:3000
+```
+
+
 ## Example of *x-tira* in an OpenAPI document
 We describe a `ToothbrushEvent` that can be shared with other utilizers via the example service from our paper. 
 
