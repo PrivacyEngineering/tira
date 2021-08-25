@@ -75,15 +75,15 @@ bin/rails credentials:edit
 ```
 
 Rails tries to open the crendentials with `$EDITOR`.
-You can define a editor by setting the `EDITOR` variable explicitely, e.g.
+You can define an editor by setting the `EDITOR` variable explicitely, e.g.
 
 ```bash
 EDITOR="nano" rails credentials:edit
 ```
 
 
-This will create an encrypted config file and a master key, for details visit [this guide](https://edgeguides.rubyonrails.org/security.html#custom-credentials)
-The configuration format can be found in the sample configuration file in `config/credentials_example.yml`
+This will create an encrypted config file and a master key, for details visit [this guide](https://edgeguides.rubyonrails.org/security.html#custom-credentials).
+The configuration format used can be found in the sample configuration file in `config/credentials_example.yml`.
 
 Database name and credentials need to be configured.
 If a different database adapter than postgres is used, this must be configured in:
