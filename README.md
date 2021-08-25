@@ -41,32 +41,91 @@ To learn more about our vocabulary used for the proposed OpenAPI extension, see 
 
 ## Installation
 
-```bash
-# Make sure ruby is installed
-ruby --version
+Make sure Ruby is installed.
 
-# Clone the repo
+```bash
+ruby --version
+```
+
+Tira was built using Ruby version `2.6.3`, Other/newer versions should work fine, but were not tested against.
+
+Install bundler
+
+```bash
+gem install bundler
+```
+
+Clone the repo
+
+```bash
 git clone git@github.com:PrivacyEngineering/tira.git
 cd tira/
-
-# Install rails
-sudo gem install rails
-
-# ...and all dependencies (might ask for your password and then takes a while)
-sudo gem install bundler
-bundle install
-
-# Run a postgres database via the offical docker image
-docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
-
-# Edit the credentials
-... # TODO
-
-# Start the application
-rails server
-
-open http://localhost:3000
 ```
+
+Install all gems via bundler
+
+```bash
+bundle install
+```
+
+Configure secrets and credentils 
+
+```bash
+bin/rails credentials:edit
+```
+
+Rails tries to open the crendentials with `$EDITOR`.
+You can define a editor by setting the `EDITOR` variable explicitely, e.g.
+
+```bash
+EDITOR="nano" rails credentials:edit
+```
+
+
+This will create an encrypted config file and a master key, for details visit [this guide](https://edgeguides.rubyonrails.org/security.html#custom-credentials)
+The configuration format can be found in the sample configuration file in `config/credentials_example.yml`
+
+Database name and credentials need to be configured.
+If a different database adapter than postgres is used, this must be configured in:
+
+```
+config/database.yml
+```
+
+
+Set up a postgres database (if you chose to not use postgres, set up a database according to your configuration).
+
+You can use the offical docker image
+
+```bash
+docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+```
+
+or set up a postgres database locally
+
+```psql
+create database $db_name;
+
+create role $user_name with createdb login password 'password';
+
+grant all privileges on database $db_name to $user_name;
+
+```
+
+Now run the migrations to set up the database
+
+```bash
+bin/rails db:migrate RAILS_ENV=development
+```
+
+
+TransparencyHub is now set up and you can start the application
+
+```bash
+rails s
+```
+
+The app is now accessible via `http://localhost:3000`
 
 
 ## Example of *x-tira* in an OpenAPI document
