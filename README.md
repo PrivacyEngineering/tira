@@ -13,11 +13,10 @@ Transparency – the provision of information about what personal data is collec
 
 
 ```
-@incollection{tira2021,
+@inproceedings{gruenewald2021tira,
   title = {TIRA: An OpenAPI Extension and Toolbox for GDPR Transparency in RESTful Architectures},
   author = {Elias Grünewald and Paul Wille and Frank Pallas and Maria C. Borges and Max-R. Ulbricht},
-  intype = {to appear in},
-  booktitle = {2021 International Workshop on Privacy Engineering (IWPE)},
+  booktitle={2021 IEEE European Symposium on Security and Privacy Workshops (EuroS\&PW)},
   publisher = {IEEE Computer Society},
   year = {2021}
 }
