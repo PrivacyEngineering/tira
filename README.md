@@ -18,6 +18,7 @@ Transparency – the provision of information about what personal data is collec
   author = {Elias Grünewald and Paul Wille and Frank Pallas and Maria C. Borges and Max-R. Ulbricht},
   booktitle={2021 IEEE European Symposium on Security and Privacy Workshops (EuroS\&PW)},
   publisher = {IEEE Computer Society},
+  doi = {10.1109/EuroSPW54576.2021.00039},
   year = {2021}
 }
 ```
