@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-container
+  template:
+    metadata:
+      labels:
+        app: postgres-container
+    spec:
+      containers:
+        - env:
+          - name: LANG
+            value: en_US.UTF-8
+          - name: LANGUAGE
+            value: en_US.UTF-8
+          - name: LC_ALL
+            value: en_US.UTF-8
+          - name: POSTGRES_DB
+            value: tira
+          - name: POSTGRES_PASSWORD
+            value: tira
+          - name: POSTGRES_USER
+            value: tira
+          image: postgres:alpine
+          name: db
+          resources: {}
+          ports:
+            - containerPort: 5432
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: postgres-cluster-ip-service
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres-container
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

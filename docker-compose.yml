@@ -1,0 +1,50 @@
+version: '3'
+services:
+  init:
+    image: maximiliangaedig/tira
+    command: bundle exec rails db:migrate
+    restart: "no"
+    networks:
+      - tira
+    depends_on:
+      - db
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USERNAME=tira
+      - DATABASE_PASSWORD=tira
+      - DATABASE_NAME=tira
+      - DATABASE_TYPE=postgresql
+  app:
+    image: maximiliangaedig/tira
+    tty: true
+    networks:
+      - tira
+    ports:
+      - "3000:3000"
+    command: bundle exec rails s -b 0.0.0.0 -p 3000
+    restart: always
+    depends_on:
+      - db
+      - tira_migrate
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USERNAME=tira
+      - DATABASE_PASSWORD=tira
+      - DATABASE_NAME=tira
+      - DATABASE_TYPE=postgresql
+  db:
+    image: postgres:alpine
+    restart: always
+    networks:
+      - tira
+    environment:
+      - POSTGRES_USER=tira
+      - POSTGRES_PASSWORD=tira
+      - POSTGRES_DB=tira
+      # encoding
+      - LANG=en_US.UTF-8
+      - LANGUAGE=en_US.UTF-8
+      - LC_ALL=en_US.UTF-8
+
+networks:
+  tira:
