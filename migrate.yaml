@@ -23,7 +23,7 @@ spec:
             value: postgresql
           - name: DATABASE_USERNAME
             value: tira
-        image: tira/tira # Hosted version on my own repo maximiliangaedig
+        image: eliasgruenewald/tira
         name: tira-migration-container
         resources: {}
       restartPolicy: Never

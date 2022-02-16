@@ -27,7 +27,7 @@ spec:
               value: postgresql
             - name: DATABASE_USERNAME
               value: tira
-          image: your-repo/tira # Hosted version on my own repo maximiliangaedig
+          image: eliasgruenewald/tira
           name: tira
           ports:
             - containerPort: 3000

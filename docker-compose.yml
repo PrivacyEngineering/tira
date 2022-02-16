@@ -1,7 +1,7 @@
 version: '3'
 services:
   init:
-    image: maximiliangaedig/tira
+    image: eliasgruenewald/tira
     command: bundle exec rails db:migrate
     restart: "no"
     networks:
@@ -15,7 +15,7 @@ services:
       - DATABASE_NAME=tira
       - DATABASE_TYPE=postgresql
   app:
-    image: maximiliangaedig/tira
+    image: eliasgruenewald/tira
     tty: true
     networks:
       - tira
