@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tira
+  name: tira
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tira
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: tira
+    spec:
+      containers:
+        - env:
+            - name: DATABASE_HOST
+              value: db
+            - name: DATABASE_NAME
+              value: tira
+            - name: DATABASE_PASSWORD
+              value: tira
+            - name: DATABASE_TYPE
+              value: postgresql
+            - name: DATABASE_USERNAME
+              value: tira
+          image: eliasgruenewald/tira
+          name: tira
+          ports:
+            - containerPort: 3000
+          resources: {}
+          tty: true
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tira-service
+spec:
+  ports:
+    - name: "3000"
+      port: 3000
+      targetPort: 3000
+  selector:
+    app: tira
+status:
+  loadBalancer: {}

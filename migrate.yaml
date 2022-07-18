@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tira-postgresql-migrations
+spec:
+  template:
+    spec:
+      containers:
+      - args:
+          - bundle
+          - exec
+          - rails
+          - db:migrate
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: DATABASE_HOST
+            value: postgres-cluster-ip-service
+          - name: DATABASE_NAME
+            value: tira
+          - name: DATABASE_PASSWORD
+            value: tira
+          - name: DATABASE_TYPE
+            value: postgresql
+          - name: DATABASE_USERNAME
+            value: tira
+        image: eliasgruenewald/tira
+        name: tira-migration-container
+        resources: {}
+      restartPolicy: Never
+  
+status: {}
