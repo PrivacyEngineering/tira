@@ -11,23 +11,30 @@ info:
 servers: 
   - url: "https://health.domain.tld"
 paths:
-  /{user_id}/toothbrush/share:
-  parameters:
-    - name: user_id
-      in: "path"
-      required: true
-      description: "User ID of a Health Data Hub User" 
+  "/{user_id}/toothbrush/share":
+    parameters:
+      - name: user_id
+        in: "path"
+        required: true
+        description: "User ID of a Health Data Hub User"
+        schema:
+            type : integer
     get: 
       description: Get an array of Toothbrush Events for a given time interval.
       parameters:
-      - name: startday
-        in: "query"
-        required: true
-        description: "Start date of requested interval."
-      - name: endday
-        in: "query"
-        required: true
-        description: "End date of requested interval."
+        - name: startday
+          in: "query"
+          schema:
+            type : string
+            format: date-time
+          required: true
+          description: "Start date of requested interval."
+        - name: endday
+          in: "query"
+          schema:
+            type : string
+            format: date-time
+          description: "End date of requested interval."
       responses:
         200:
           description: "Request successful."
