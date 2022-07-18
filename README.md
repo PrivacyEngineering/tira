@@ -47,7 +47,9 @@ Make sure Ruby is installed.
 ruby --version
 ```
 
-Tira was built using Ruby version `2.6.3`, Other/newer versions should work fine, but were not tested against.
+TIRA was built using Ruby version `2.6.3`, other/newer versions should work fine, but were not tested against.
+Use [rvm](https://rvm.io/) or `rbenv install --verbose 2.6.3`.
+
 
 Install bundler
 
@@ -58,7 +60,7 @@ gem install bundler
 Clone the repo
 
 ```bash
-git clone git@github.com:PrivacyEngineering/tira.git
+git clone https://github.com/PrivacyEngineering/tira.git
 cd tira/
 ```
 
