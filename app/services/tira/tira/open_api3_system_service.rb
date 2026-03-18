@@ -227,14 +227,17 @@ module Tira
         
         get_all_current_specs.map { |spec|
             if spec and spec.service
+              spec_transparency_service = spec.transparency_service
+              next unless spec_transparency_service
+
               # TODO achtung, wenn hier 2 mal das gleiche Datum jeweils exposed und consumed ist, kommts nur einmal vor.
               # macht auch sinn soweit
               if only_consumed
-                pd = spec.transparency_service.consumed_personal_data
+                pd = spec_transparency_service.consumed_personal_data
               elsif only_exposed
-                pd = spec.transparency_service.exposed_personal_data
+                pd = spec_transparency_service.exposed_personal_data
               else
-                pd = spec.transparency_service.consumed_personal_data.merge(spec.transparency_service.exposed_personal_data)
+                pd = spec_transparency_service.consumed_personal_data.merge(spec_transparency_service.exposed_personal_data)
               end
               
               services_personal_data[spec.service] = pd
@@ -249,9 +252,12 @@ module Tira
         # array of personal data instances
         personal_data = []
         get_all_current_specs.each do  |spec|
-            if spec and spec.service and spec.transparency_service.get_personal_data
-                personal_data << spec.transparency_service.get_personal_data
-            end
+            next unless spec and spec.service
+
+            spec_transparency_service = spec.transparency_service
+            next unless spec_transparency_service and spec_transparency_service.get_personal_data
+
+            personal_data << spec_transparency_service.get_personal_data
         end
         return personal_data.flatten
       end

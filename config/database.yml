@@ -1,15 +1,15 @@
 
 default: &default
-  adapter: postgresql
+  adapter: <%= ENV['DATABASE_TYPE'] || 'postgresql' %>
   encoding: unicode
   pool: 5
-  host: localhost
+  host: <%= ENV['DATABASE_HOST'] || 'localhost' %>
 
 development:
   <<: *default
-  database: <%= Rails.application.credentials.dig :database, :name, :development %>
-  username: <%= Rails.application.credentials.dig :database, :user, :development %>
-  password: <%= Rails.application.credentials.dig :database, :password, :development %>
+  database: <%= ENV['DATABASE_NAME'] || Rails.application.credentials.dig(:database, :name, :development) %>
+  username: <%= ENV['DATABASE_USERNAME'] || Rails.application.credentials.dig(:database, :user, :development) %>
+  password: <%= ENV['DATABASE_PASSWORD'] || Rails.application.credentials.dig(:database, :password, :development) %>
 
 
 test:
@@ -27,6 +27,6 @@ test:
 
 production:
   <<: *default
-  database: <%= Rails.application.credentials.dig :database, :name, :production %>
-  username: <%= Rails.application.credentials.dig :database, :user, :production %>
-  password: <%= Rails.application.credentials.dig :database, :password, :production %>
+  database: <%= ENV['DATABASE_NAME'] || Rails.application.credentials.dig(:database, :name, :production) %>
+  username: <%= ENV['DATABASE_USERNAME'] || Rails.application.credentials.dig(:database, :user, :production) %>
+  password: <%= ENV['DATABASE_PASSWORD'] || Rails.application.credentials.dig(:database, :password, :production) %>

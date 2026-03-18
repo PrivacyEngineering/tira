@@ -35,7 +35,8 @@ class SchemasController < ApplicationController
               # format.json {render :text => schema.raw_data_json, :content_type => 'text/json'}
               format.html {render :plain => generate_yappl(@name), :content_type => 'text/plain'}
             end
-
+        else
+            head :not_found
         end
 
 

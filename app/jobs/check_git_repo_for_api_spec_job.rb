@@ -37,7 +37,13 @@ class CheckGitRepoForApiSpecJob < ApplicationJob
                 end
                 if git 
                     logger.debug ("CheckGitRepoForApiSpecJob::perform ==> Trying to PULL now")
-                    git.pull
+                    begin
+                        git.pull
+                    rescue Git::GitExecuteError => e
+                        logger.error("CheckGitRepoForApiSpecJob::perform ==> Git pull failed: #{e.message}")
+                    rescue StandardError => e
+                        logger.error("CheckGitRepoForApiSpecJob::perform ==> Unexpected error during git pull: #{e.message}")
+                    end
                 end
             end
             if not git 
@@ -45,16 +51,11 @@ class CheckGitRepoForApiSpecJob < ApplicationJob
                 logger.debug ("CheckGitRepoForApiSpecJob::perform ==> No repo found. Trying to CLONE")
                 begin 
                     git = Git.clone(service.gitlab_repo_url, service.name, :path => Rails.root + 'data/git_repos/')
-                # ######################
-                # TODO
-                # Implement proper way to handle these errors
-                # Somehow the developer should see within Transparency Hub, if a webhook failed
-                # ######################
-                rescue Git::GitExecuteError
-                    logger.error ("CheckGitRepoForApiSpecJob::perform ==> CLONing failed")
+                rescue Git::GitExecuteError => e
+                    logger.error("CheckGitRepoForApiSpecJob::perform ==> Git clone failed: #{e.message}")
                     return false
-                rescue
-                    logger.error ("CheckGitRepoForApiSpecJob::perform ==> CLONing failed")
+                rescue StandardError => e
+                    logger.error("CheckGitRepoForApiSpecJob::perform ==> Unexpected error cloning repository: #{e.message}")
                     return false
                 end
             end
