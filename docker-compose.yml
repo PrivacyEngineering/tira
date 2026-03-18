@@ -1,6 +1,7 @@
 version: '3'
 services:
   init:
+    build: .
     image: eliasgruenewald/tira
     command: bundle exec rails db:migrate
     restart: "no"
@@ -15,6 +16,7 @@ services:
       - DATABASE_NAME=tira
       - DATABASE_TYPE=postgresql
   app:
+    build: .
     image: eliasgruenewald/tira
     tty: true
     networks:
@@ -25,7 +27,8 @@ services:
     restart: always
     depends_on:
       - db
-      - tira_migrate
+      # - tira_migrate
+      - init
     environment:
       - DATABASE_HOST=db
       - DATABASE_USERNAME=tira

@@ -6,10 +6,12 @@ RUN bundle config --global frozen 1
 WORKDIR /usr/src/app
 
 COPY Gemfile Gemfile.lock ./
-RUN apt-get update &&\
+RUN sed -i 's|deb.debian.org/debian|archive.debian.org/debian|g' /etc/apt/sources.list &&\
+  sed -i 's|security.debian.org/debian-security|archive.debian.org/debian-security|g' /etc/apt/sources.list &&\
+  sed -i '/buster-updates/d' /etc/apt/sources.list &&\
+  apt-get -o Acquire::Check-Valid-Until=false update &&\
   apt-get install git libpq-dev build-essential nodejs -y &&\
-  gem install pg &&\
-  gem install bundler &&\
+  gem install bundler:2.2.14 &&\
   bundle install
 
 COPY . .
